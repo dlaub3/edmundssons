@@ -43,7 +43,9 @@ Your application is already set up to be tested via [web-component-tester](https
 * Animation
 * Snow Effect
 * Dirt Effect
-* Open Graph Data 
+* Open Graph Data
+* Email Support
+* Disqus Support 
 * Pages:
 
     * Land Scaping
