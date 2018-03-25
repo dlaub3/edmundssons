@@ -1,0 +1,39 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+
+
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="page-about">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: flex;
+                justify-content: center;
+                padding-top: 50px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        </style>
+    
+
+
+    <paper-card heading="Emmental" image="http://www.nhhomemagazine.com/images/cache/cache_8/cache_9/cache_9/gardenrx1_septoct2013-e6af4998.jpeg" alt="Emmental">
+        <div class="card-content">
+        Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
+        </div>
+        <div class="card-actions">
+        <paper-button>Share</paper-button>
+        <paper-button>Explore!</paper-button>
+        </div>
+  </paper-card>
+  
+  
+    </template>
+    <script>
+        class PageAbout extends Polymer.Element {
+            static get is() { return 'page-about'; }
+        }
+        window.customElements.define(PageAbout.is, PageAbout);
+    </script>
+</dom-module>
