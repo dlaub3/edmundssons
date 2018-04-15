@@ -71,8 +71,8 @@
         </div>
         <div id="actions" class="card-actions">
             <iron-form id="form">
-                <form  name="contact" method="POST" action="thank-you" netlify-honeypot="bot-field" netlify>
-                  <input class='honey' name="bot-field"></label> 
+                <form  name="contact" method="POST" action="thank-you" netlify-honeypot="lastname" netlify>
+                  <paper-input class="honey"  name="lastname" value=""></paper-input> 
                   <paper-input auto-validate  name="name" label="Name" error-message="This field is required." required></paper-input>
                   <paper-input auto-validate  pattern="^(\+0?1\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$" name="phone" label="Phone" error-message="A valid phone number is required."  required></paper-input>
                   <paper-textarea auto-validate label="Message" name="message" error-message="This field is required." required></paper-textarea>
