@@ -138,10 +138,12 @@
             fallback-selection="about"
             role="main">
           <page-about name="about" id="about"></page-about>
-          <page-contact name="contact" id="contact"></page-contact>
+          <page-contact name="contact" id="contact">
+              <slot name="recaptcha"></slot>
+          </page-contact>
           <page-snow name="snow" id="snow"></page-snow>
           <page-reviews name="reviews" id="reviews">
-              <slot></slot>
+              <slot name="disqus"></slot>
           </page-reviews>
           <page-404 name="404" id="404"></page-404>
         </iron-pages>
