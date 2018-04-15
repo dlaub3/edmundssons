@@ -14,21 +14,28 @@
                 padding-right: 20px;
             }
 
+            paper-card {
+                box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.14),
+                    0 1px 8px 0 rgba(0, 0, 0, 0.12),
+                    0 3px 3px -2px rgba(0, 0, 0, 0.4);
+                transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
             my-carousel {
-            width: 100%;
-            contain: content;
+                width: 100%;
+                contain: content;
             }
 
             my-carousel::after {
-            display: block;
-            content: '';
-            padding-top: 75%; /* 4:3 = height is 75% of width */
+                display: block;
+                content: '';
+                padding-top: 75%; /* 4:3 = height is 75% of width */
             }
 
             my-carousel img {
-            position: absolute;
-            width: 100%;
-            height: 100%;
+                position: absolute;
+                width: 100%;
+                height: 100%;
             }
 
         </style>
@@ -42,6 +49,7 @@
             <img src="/src/polymer-app/images/pattern-black.svg">
         </my-carousel>         
         <div class="card-content">
+        
         Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
         </div>
         <div class="card-actions">

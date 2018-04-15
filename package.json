@@ -1,22 +1,22 @@
 {
-  "name": "polymer",
-  "version": "1.0.0",
-  "description": "Add browser-sync to polymer",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "dev": "polymer serve & npm run watch",
-    "test": "polymer test",
-    "watch": "browser-sync start --proxy localhost:8000 --files 'src/*/*.html, src/*/*.js, images/*/*' "
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "browser-sync": "^2.23.6"
-  },
-  "dependencies": {
-    "npm": "^5.8.0"
-  }
+	"name": "polymer",
+	"version": "1.0.0",
+	"description": "Add browser-sync to polymer",
+	"main": "index.js",
+	"directories": {
+		"test": "test"
+	},
+	"scripts": {
+		"dev": "polymer serve & npm run watch",
+		"test": "polymer test",
+		"watch": "browser-sync start --proxy localhost:8081 --files 'src/*/*.html, src/*/*.js, images/*/*' "
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"browser-sync": "^2.23.6"
+	},
+	"dependencies": {
+		"npm": "^5.8.0"
+	}
 }
