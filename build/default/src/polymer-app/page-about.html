@@ -1,0 +1,70 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../my-carousel/my-carousel.html">
+
+<dom-module id="page-about">
+    <template>
+
+        <style>
+            :host {
+                display: flex;
+                justify-content: center;
+                padding-top: 50px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            paper-card {
+                box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.14),
+                    0 1px 8px 0 rgba(0, 0, 0, 0.12),
+                    0 3px 3px -2px rgba(0, 0, 0, 0.4);
+                transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            my-carousel {
+                width: 100%;
+                contain: content;
+            }
+
+            my-carousel::after {
+                display: block;
+                content: '';
+                padding-top: 75%; /* 4:3 = height is 75% of width */
+            }
+
+            my-carousel img {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+            }
+
+        </style>
+
+    <paper-card>
+        <!-- https://codelabs.developers.google.com/codelabs/polymer-2-carousel/index.html?index=..%2F..%2Findex#0 -->
+        <my-carousel>
+            <img src="/src/polymer-app/images/excavator.jpg">
+            <img src="/src/polymer-app/images/pattern-brown.svg">
+            <img src="/src/polymer-app/images/excavator.jpg">
+            <img src="/src/polymer-app/images/pattern-black.svg">
+        </my-carousel>         
+        <div class="card-content">
+        
+        Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
+        </div>
+        <div class="card-actions">
+        <paper-button>Share</paper-button>
+        <paper-button>Explore!</paper-button>
+        </div>
+   </paper-card>
+  
+  
+    </template>
+    <script>
+        class PageAbout extends Polymer.Element {
+            static get is() { return 'page-about'; }
+        }
+
+        window.customElements.define(PageAbout.is, PageAbout);
+    </script>
+</dom-module>

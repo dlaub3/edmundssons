@@ -1,0 +1,193 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+
+<link rel="import" href="../../bower_components/font-roboto-local/roboto.html">
+<link rel="import" href="custom-icons.html">
+<link rel="import" href="page-about.html">
+<link rel="import" href="page-contact.html">
+<link rel="import" href="page-snow.html">
+<link rel="import" href="page-reviews.html">
+<link rel="lazy-import" href="page-404.html">
+
+<dom-module id="polymer-app">
+  <template>
+    <!-- include classes in the main document -->
+  <style include="iron-flex">
+    .container {
+      @apply(--layout-horizontal);
+    }
+  </style>
+
+    <style>
+      :host {
+        --app-primary-color:black;
+        --app-accent-color1:#c45910;
+        --app-accent-color2:#528033;
+      }
+      
+      app-header-layout {
+        background-size: cover;
+        display: block;
+      }
+
+      iron-pages {
+        background: transparent;
+      }
+
+      app-drawer-layout:not([narrow]) [drawer-toggle] {
+        display: none;
+      }
+
+      app-drawer-layout:not([narrow]) .mobile {
+        display: none;
+      }
+
+      app-drawer-layout[narrow] .desktop {
+        display: none;
+      }
+
+      app-header {
+        color: #fff;
+        background-color: var(--app-primary-color);
+        text-align: center;
+      }
+
+      app-header paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+
+      .drawer-list {
+        margin: 0 20px;
+      }
+
+      .drawer-list a {
+        display: block;
+        padding: 0 16px;
+        text-decoration: none;
+        color: var(--app-primary-color);
+        line-height: 40px;
+      }
+
+      .drawer-list a.iron-selected {
+        color: var(--app-primary-color);
+        font-weight: bold;
+      }
+    </style>
+
+    <app-location route="{{route}}" url-space-regex="^[[rootPath]]">
+    </app-location>
+
+    <app-route route="{{route}}" pattern="[[rootPath]]:pageName" data="{{routeData}}" tail="{{subroute}}">
+    </app-route>
+
+    <!-- Drawer  -->
+    
+    <app-drawer-layout fullbleed="" narrow="{{narrow}}">
+    <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
+        <iron-image class="desktop" sizing="cover" preload="" style="width:256px; height:100px;" src="src/polymer-app/images/logo.png"></iron-image>
+      <iron-selector selected="[[pageName]]" attr-for-selected="name" class="drawer-list" role="navigation">
+        <a name="about" href="[[rootPath]]about">About</a>
+        <a name="contact" href="[[rootPath]]contact">Contact</a>
+        <a name="snow" href="[[rootPath]]snow">Snow</a>
+        <a name="reviews" href="[[rootPath]]reviews">Reviews</a>
+      </iron-selector>
+    </app-drawer>
+      
+    <app-header-layout has-scrolling-region="">
+      <!-- Header -->
+        <app-header class="container" slot="header" condenses="" reveals="" effects="waterfall">
+          <app-toolbar style="height: 100px;">
+            <paper-icon-button icon="poly-icon:menu" drawer-toggle=""></paper-icon-button>
+            <div class="flex self-center">
+                <iron-image class="mobile" sizing="cover" preload="" style="width:256px; height:100px;" src="src/polymer-app/images/logo.png"></iron-image>
+            </div>
+            
+          </app-toolbar>
+        </app-header>
+        
+        <!-- Pages -->
+        
+        <iron-pages selected="[[pageName]]" attr-for-selected="name" fallback-selection="about" role="main">
+          <page-about name="about" id="about"></page-about>
+          <page-contact name="contact" id="contact"></page-contact>
+          <page-snow name="snow" id="snow"></page-snow>
+          <page-reviews name="reviews" id="reviews">
+              <slot></slot>
+          </page-reviews>
+          <page-404 name="404" id="404"></page-404>
+        </iron-pages>
+        
+      </app-header-layout>
+    </app-drawer-layout>
+  </template>
+
+  <script>
+
+    class PolymerApp extends Polymer.Element {
+      static get is() { return 'polymer-app'; }
+
+      static get properties() {
+        return {
+          template: String,
+          pageName: {
+            type: String,
+            reflectToAttribute: true,
+          },
+          //routeData is set in the <app-route> and <app-location> components
+          routeData: {
+            type: Object,
+            reflectToAttribute: false,
+            observer: '_pageChanged',
+          },
+          subroute: String,
+          rootPath: String,
+        };
+      }
+
+      _pageChanged(routeData) {
+        // set pageName iron-pages
+        this.pageName = routeData.pageName || 'about';
+
+        if (!this.$.drawer.persistent) {
+          this.$.drawer.close();
+        }
+
+        // checks to see if the page is loaded
+        if ( this.$[routeData.pageName] instanceof Polymer.Element ) {
+          return;
+        }
+
+        // imports a "lazy-import" page
+        var resolvedPageUrl = this.resolveUrl('page-' + this.pageName + '.html');
+        Polymer.importHref(
+            resolvedPageUrl,
+            null,
+            this._404.bind(this),
+            true);
+      }
+
+      _404() {
+        this.pageName = '404';
+      }
+    }
+
+    window.customElements.define(PolymerApp.is, PolymerApp);
+  </script>
+</dom-module>
