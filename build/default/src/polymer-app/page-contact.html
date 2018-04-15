@@ -72,7 +72,7 @@
                   <paper-input auto-validate="" pattern="^(\+0?1\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$" name="name" label="Phone" error-message="A valid phone number is required." required=""></paper-input>
                   <paper-textarea auto-validate="" label="Message" name="message" error-message="This field is required." required=""></paper-textarea>
                   <paper-button raised="" class="primary" on-click="_submitForm">Submit</paper-button>
-                  <div data-netlify-recaptcha=""></div>
+                  <slot name="recaptcha"></slot>
                 </form>
               </iron-form>
         </div>
