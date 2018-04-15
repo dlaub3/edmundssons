@@ -52,7 +52,7 @@
 
         </style>
 
-    <paper-card >
+    <paper-card>
         <!-- heading="Emmental" image="/src/polymer-app/images/excavator.jpg" alt="Emmental" -->
         <div style="display: block; height: 400px;">
             <google-map fit-to-markers api-key="AIzaSyD3E1D9b-Z7ekrT3tbhl_dy8DCXuIuDDRc">
@@ -65,16 +65,16 @@
             Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
             
         </div>
-        <div class="card-actions">
+        <div id="actions" class="card-actions">
             <iron-form id="form">
-                <form name="contact" method="POST" action="thank-you" netlify >
+                <form  name="contact" method="POST" action="thank-you" netlify>
                   <paper-input auto-validate  name="name" label="Name" error-message="This field is required." required></paper-input>
-                  <paper-input auto-validate  pattern="^(\+0?1\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$" name="name" label="Phone" error-message="A valid phone number is required."  required></paper-input>
+                  <paper-input auto-validate  pattern="^(\+0?1\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$" name="phone" label="Phone" error-message="A valid phone number is required."  required></paper-input>
                   <paper-textarea auto-validate label="Message" name="message" error-message="This field is required." required></paper-textarea>
                   <paper-button raised  class="primary" on-click="_submitForm">Submit</paper-button>
                   <slot name="recaptcha"></slot>
                 </form>
-              </iron-form>
+            </iron-form>
         </div>
     </paper-card>
 
@@ -84,9 +84,35 @@
         class PageContact extends Polymer.Element {
             static get is() { return 'page-contact'; }
 
-            _submitForm() {
+            _submitForm(e) {
+                e.preventDefault();
+                this.$.form.serializeForm();
                 this.$.form.submit();
             }
+
+            ready() {
+                super.ready();
+
+                this.$.form.addEventListener('iron-form-response', this._handleSuccess.bind(this)); 
+
+                this.$.form.addEventListener('iron-form-error', this._handleError.bind(this));                 
+            }
+
+            _handleError(e) {
+                    e.preventDefault();
+                    console.log(e);
+                    let message = document.createElement('span');
+                    message.textContent = "Your Submission has ben recieved";
+                    this.$.actions.appendChild(message); 
+            }
+
+            _handleSuccess(e) {
+                e.preventDefault();
+                let message = document.createElement('span');
+                message.textContent = "Your Submission has ben recieved";
+                this.$.actions.appendChild(message); 
+            }
+            
         }
 
         window.customElements.define(PageContact.is, PageContact);
