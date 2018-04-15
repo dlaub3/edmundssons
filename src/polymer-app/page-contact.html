@@ -36,12 +36,18 @@
 
             paper-button {
                 background-color: var(--app-primary-color);
+                margin-top: 13px;
+                margin-right: 0px;
+                margin-bottom: 8px;
+                float: right;
                 color: white;
-                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-                --paper-input-container-color: orange;
                 --paper-input-container-focus-color: orange;
                 --paper-input-container-invalid-color: orange;
                 --paper-input-container-input-color: orange;
+            }
+
+            google-map {
+                pointer-events:none;
             }
 
         </style>
@@ -50,7 +56,7 @@
         <!-- heading="Emmental" image="/src/polymer-app/images/excavator.jpg" alt="Emmental" -->
         <div style="display: block; height: 400px;">
             <google-map fit-to-markers api-key="AIzaSyD3E1D9b-Z7ekrT3tbhl_dy8DCXuIuDDRc">
-                <google-map-marker slot="markers" latitude="43.5852" longitude="-71.2095" draggable="false">
+                <google-map-marker animation="DROP" id="marker" slot="markers" latitude="43.5852" longitude="-71.2095" draggable="false">
                 </google-map-marker>
             </google-map>
         </div>
@@ -60,14 +66,14 @@
             
         </div>
         <div class="card-actions">
-            <iron-form id="form3">
-                <form action="/foo" method="get">
-                  <paper-input class="primary" name="name" label="Name" value="" required></paper-input>
-                  <paper-input class="primary" pattern="^(\+0?1\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$" name="name" label="Phone" value="" required></paper-input>
-                  <paper-textarea label="Message" required></paper-textarea>
-                  <paper-button raised  class="primary"onclick="form3.submit()">Submit</paper-button>
+            <iron-form id="form">
+                <form name="contact" method="POST" action="thank-you" netlify >
+                  <paper-input auto-validate  name="name" label="Name" error-message="This field is required." required></paper-input>
+                  <paper-input auto-validate  pattern="^(\+0?1\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$" name="name" label="Phone" error-message="A valid phone number is required."  required></paper-input>
+                  <paper-textarea auto-validate label="Message" name="message" error-message="This field is required." required></paper-textarea>
+                  <paper-button raised  class="primary" on-click="_submitForm">Submit</paper-button>
+                  <div data-netlify-recaptcha></div>
                 </form>
-                <div class="output"></div>
               </iron-form>
         </div>
     </paper-card>
@@ -77,14 +83,9 @@
     <script>
         class PageContact extends Polymer.Element {
             static get is() { return 'page-contact'; }
-            ready() {
-                super.ready();
-                this.$.form3.addEventListener('iron-form-presubmit', function(event) {
-                    this.request.params['sidekick'] = 'Robin';
-                });
-                this.$.form3.addEventListener('iron-form-submit', function(event) {
-                    this.querySelector('.output').innerHTML = JSON.stringify(event.detail);
-                }); 
+
+            _submitForm() {
+                this.$.form.submit();
             }
         }
 
