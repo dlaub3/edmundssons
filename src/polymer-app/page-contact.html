@@ -71,7 +71,8 @@
         </div>
         <div id="actions" class="card-actions">
             <iron-form id="form">
-                <form  name="contact" method="POST" action="thank-you" netlify-honeypot="lastname" netlify>
+                <form  method="POST" action="thank-you">
+                  <input type="hidden" name="form-name" value="contact" />
                   <paper-input class="honey"  name="lastname" value=""></paper-input> 
                   <paper-input auto-validate  name="name" label="Name" error-message="This field is required." required></paper-input>
                   <paper-input auto-validate  pattern="^(\+0?1\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$" name="phone" label="Phone" error-message="A valid phone number is required."  required></paper-input>
@@ -80,6 +81,14 @@
                   <slot></slot>
                 </form>
             </iron-form>
+
+            <form  name="contact" method="POST" action="thank-you" netlify-honeypot="lastname" netlify hidden>
+                <input type="text" name="name">
+                <input type="text" name="phone">
+                <input type="text" name="message" id="">
+                <paper-button raised  class="primary" on-click="_submitForm">Submit</paper-button>
+            </form>
+
         </div>
     </paper-card>
 
@@ -91,26 +100,22 @@
 
             _submitForm(e) {
                 e.preventDefault();
-                let form = this.$.form;
-                form.enctype = "application/x-www-form-urlencoded";
                 form.serializeForm();
                 form.submit();
             }
 
             ready() {
                 super.ready();
-
                 this.$.form.addEventListener('iron-form-response', this._handleSuccess.bind(this)); 
-
                 this.$.form.addEventListener('iron-form-error', this._handleError.bind(this));                 
             }
 
             _handleError(e) {
-                    e.preventDefault();
-                    console.log(e);
-                    let message = document.createElement('span');
-                    message.textContent = "Your Submission has ben recieved";
-                    this.$.actions.appendChild(message); 
+                e.preventDefault();
+                console.log(e);
+                let message = document.createElement('span');
+                message.textContent = "Your Submission has ben recieved";
+                this.$.actions.appendChild(message); 
             }
 
             _handleSuccess(e) {
