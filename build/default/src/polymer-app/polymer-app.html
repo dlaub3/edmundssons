@@ -23,6 +23,10 @@
 <link rel="import" href="page-about.html">
 <link rel="import" href="page-contact.html">
 <link rel="import" href="page-snow.html">
+<link rel="import" href="page-rock.html">
+<link rel="import" href="page-lawn.html">
+<link rel="import" href="page-tree.html">
+<link rel="import" href="page-excavation.html">
 <link rel="import" href="page-reviews.html">
 <link rel="lazy-import" href="page-404.html">
 
@@ -105,7 +109,11 @@
       <iron-selector selected="[[pageName]]" attr-for-selected="name" class="drawer-list" role="navigation">
         <a name="about" href="[[rootPath]]about">About</a>
         <a name="contact" href="[[rootPath]]contact">Contact</a>
-        <a name="snow" href="[[rootPath]]snow">Snow</a>
+        <a name="snow" href="[[rootPath]]snow-removal">Snow Removal</a>
+        <a name="rock" href="[[rootPath]]rock-work">Rock Work</a>
+        <a name="lawn" href="[[rootPath]]lawn-care">Lawn Care</a>
+        <a name="tree" href="[[rootPath]]tree-services">Tree Services</a>
+        <a name="excavation" href="[[rootPath]]excavation">Excavation</a> 
         <a name="reviews" href="[[rootPath]]reviews">Reviews</a>
       </iron-selector>
     </app-drawer>
@@ -130,6 +138,10 @@
               <slot name="recaptcha"></slot>
           </page-contact>
           <page-snow name="snow" id="snow"></page-snow>
+          <page-rock name="rock" id="rock"></page-rock>
+          <page-lawn name="lawn" id="lawn"></page-lawn>
+          <page-tree name="tree" id="tree"></page-tree>
+          <page-excavation name="excavation" id="excavation"></page-excavation>
           <page-reviews name="reviews" id="reviews">
               <slot name="disqus"></slot>
           </page-reviews>
@@ -165,8 +177,9 @@
 
       _pageChanged(routeData) {
         // set pageName iron-pages
+        routeData.pageName = routeData.pageName.match(/^[a-zA-Z]+/)[0];
         this.pageName = routeData.pageName || 'about';
-
+        
         if (!this.$.drawer.persistent) {
           this.$.drawer.close();
         }
