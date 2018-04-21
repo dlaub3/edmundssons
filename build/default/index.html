@@ -31,6 +31,7 @@
           height: 100vh;
           background: #eee;
           display: flex;
+          flex-direction: column;
           align-items: center;
           justify-content: center;
           font-size: 2em;
@@ -48,7 +49,11 @@
   </head>
   <body>
     <div id="loading" class="">
+      <div>
         <div>Loading...</div>
+        <img style="width:256px; height:100px;" src="src/polymer-app/images/logo.png" alt="logo">
+      </div>
+        
     </div>
     <polymer-app>
         <div slot="disqus" id="disqus_thread"></div>
