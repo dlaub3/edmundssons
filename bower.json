@@ -15,7 +15,8 @@
     "iron-form": "PolymerElements/iron-form#^2.3.0",
     "paper-input": "PolymerElements/paper-input#^2.2.2",
     "paper-button": "PolymerElements/paper-button#^2.1.0",
-    "disqus-comments": "^0.1.2"
+    "disqus-comments": "^0.1.2",
+    "paper-spinner": "PolymerElements/paper-spinner#^2.1.0"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
